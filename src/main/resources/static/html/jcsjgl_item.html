@@ -1,0 +1,86 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>广告主管理</title>
+    <script type="text/javascript" src="../js/boot.js"></script>
+</head>
+<body>
+<div id="tb" style="padding:2px 5px;">
+    <input class="easyui-searchbox" data-options="prompt:'按照广告主和项目查询',searcher:cxFun" style="width:300px"></input>
+    <a class="easyui-linkbutton" iconCls="icon-add" onclick="javascript:addFun()">增加</a>
+    <a class="easyui-linkbutton" iconCls="icon-edit" onclick="javascript:updFun()">修改</a>
+    <!--<a class="easyui-linkbutton" iconCls="icon-remove" onclick="javascript:delFun()">删除</a>-->
+</div>
+<table id="datagrid" class="easyui-datagrid"
+       data-options="url:basePath+'/advertiserItem/list',loadFilter:loadFilter,striped:true,loadMsg:loadMsg,emptyMsg:emptyMsg,
+       fit:true,border:false,pagination:true,toolbar:'#tb',fitColumns:false,singleSelect:true,rownumbers:true,
+       pageList:pageList,pageSize:pageSize
+">
+    <thead>
+    <tr>
+        <th data-options="field:'a_name',width:200,halign:'center',sortable:true">广告主名称</th>
+        <th data-options="field:'name',width:200,halign:'center',sortable:true">项目名称</th>
+        <th data-options="field:'price',width:100,align:'right',halign:'center',sortable:true">单价</th>
+        <th data-options="field:'url',width:240,align:'left',halign:'center',sortable:true">项目链接</th>
+        <th data-options="field:'create_time',width:150,align:'center',halign:'center',formatter:dataFormatter,sortable:true">
+            创建时间
+        </th>
+    </tr>
+    </thead>
+</table>
+<div id="win" style="overflow: hidden"></div>
+
+<script type="text/javascript">
+    top['advertiser_item'] = window;
+
+    function addFun() {
+        openWin({
+            html: 'advertiser_item_add.html',
+            title: '增加广告主项目'
+        })
+    }
+
+    function updFun() {
+        var selected = $('#datagrid').datagrid('getSelected');
+        if (!selected) {
+            showTip('请先选中一条数据');
+            return;
+        }
+        openWin({
+            html: 'advertiser_item_update.html?id=' + selected.id,
+            title: '修改广告主项目'
+        })
+    }
+
+    function delFun() {
+        var selected = $('#datagrid').datagrid('getSelected');
+        if (!selected) {
+            showTip('请先选中一条数据');
+            return
+        }
+        confirm("确认删除该项目么？",function () {
+            http({
+                url: basePath + "/advertiserItem/del?id=" + selected.id,
+                success: function (response) {
+                    if (response.code == 200) {
+                        showTip("删除成功");
+                        fresh();
+                    }
+                }
+            })
+        })
+    }
+
+    function cxFun(value) {
+        $('#datagrid').datagrid('load', {gjz: value});
+    }
+
+    function fresh() {
+        $('#datagrid').datagrid('reload');
+    }
+
+</script>
+</body>
+</html>

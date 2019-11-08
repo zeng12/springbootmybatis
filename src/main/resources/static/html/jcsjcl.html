@@ -1,0 +1,131 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>基础数据处理</title>
+    <script type="text/javascript" src="../js/boot.js"></script>
+</head>
+<body>
+<div id="tb1" style="padding:2px 5px;">
+    <input id="customer1" class="easyui-searchbox" data-options="prompt:'按照编号查询',searcher:cxFun" style="width:300px"/>
+    <a class="easyui-linkbutton" iconCls="icon-add" onclick="javascript:cxFun()">查询</a>
+</div>
+<div id="tb" style="padding:2px 5px;">
+    <!--<a class="easyui-linkbutton" iconCls="icon-edit" onclick="javascript:zlsjFun()">整理数据</a>-->
+    <a class="easyui-linkbutton" iconCls="icon-edit" onclick="javascript:zhwjFun()">整合文件</a>
+    <a class="easyui-linkbutton" iconCls="icon-edit" onclick="javascript:xzwjFun()">下载文件</a>
+</div>
+<body class="easyui-layout">
+<div data-options="region:'east',split:true,collapsible:false" style="width:450px;">
+    <table id="datagrid1" class="easyui-datagrid"
+           data-options="url:basePath+'/asFile/findAsFileByAsId',loadFilter:loadFilter,striped:true,loadMsg:loadMsg,emptyMsg:emptyMsg,
+           fit:true,border:false,pagination:false,toolbar:'#tb',fitColumns:true,singleSelect:true,rownumbers:false,
+           checkOnSelect:false,selectOnCheck:false
+    ">
+        <thead>
+        <tr>
+            <th data-options="field:'ck',checkbox:true"></th>
+            <th data-options="field:'filenameold',width:240,halign:'center',sortable:true,formatter:fileNameFormat">filename</th>
+            <th data-options="field:'filetype',width:80,align:'center',halign:'center',sortable:true">filetype</th>
+            <th data-options="field:'date',width:100,align:'center',halign:'center',sortable:true,formatter:dateFormat">date</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+<div data-options="region:'center'">
+    <table id="datagrid" class="easyui-datagrid"
+           data-options="url:basePath+'/basicData/findAllAs',toolbar:'#tb1',loadFilter:loadFilter,striped:true,loadMsg:loadMsg,emptyMsg:emptyMsg,
+           fit:true,border:false,pagination:true,fitColumns:false,singleSelect:true,rownumbers:true,
+           pageList:pageList,pageSize:pageSize,onClickRow:onClickRow
+    ">
+        <thead>
+        <tr>
+            <th data-options="field:'customer',width:150,halign:'center',sortable:true">customer</th>
+            <th data-options="field:'provider',width:150,halign:'center',sortable:true">provider</th>
+            <th data-options="field:'peer',width:150,halign:'center',sortable:true">peer</th>
+            <th data-options="field:'cone',width:150,halign:'center',sortable:true">cone</th>
+            <th data-options="field:'apa',width:150,halign:'center',sortable:true">apa</th>
+            <th data-options="field:'dark',width:150,halign:'center',sortable:true">dark</th>
+            <th data-options="field:'alexa',width:150,halign:'center',sortable:true">alexa</th>
+            <th data-options="field:'darkAndAlexa',width:150,halign:'center',sortable:true">darkAndAlexa</th>
+            <th data-options="field:'transit',width:150,halign:'center',sortable:true">transit</th>
+            <th data-options="field:'betweeness',width:150,halign:'center',sortable:true">betweeness</th>
+            <th data-options="field:'closeness',width:150,halign:'center',sortable:true">closeness</th>
+            <th data-options="field:'cluster',width:150,halign:'center',sortable:true">cluster</th>
+        </tr>
+        </thead>
+    </table>
+</div>
+
+<script type="text/javascript">
+    top['jcsjcl'] = window;
+
+    init();
+    function init() {
+        $('#datagrid').datagrid('load', {customer: ''});
+    }
+
+    function cxFun() {
+        var customer = $('#customer').textbox('getValue');
+        $('#datagrid').datagrid('load', {customer: customer});
+    }
+
+    function zhwjFun() {
+        $.messager.confirm('提示', '确定要整合选中的AS的文件吗?', function(r){
+            if (r){
+                alert("loading...")
+            }
+        });
+    }
+    function xzwjFun() {
+        $.messager.confirm('提示', '确定要下载选中整合的AS的文件吗?', function(r){
+            if (r){
+                alert("loading...")
+            }
+        });
+    }
+    
+    function onClickRow(index,row) {
+        $('#datagrid1').datagrid('load', row);
+    }
+
+
+    function dateFormat(value){
+        return value==null||value==undefined||value==""?"":(value.length>10?value.substr(0,10):"");
+    }
+    
+    function fileNameFormat(e) {
+        return "<a href=''>"+e+"</a>"
+    }
+
+    function zlsjFun() {
+        var items =
+            "customer  provider  peer   cone   apa  dark   alexa   darkAndAlexa   transit  betweeness  closeness cluster  type," +
+            "0 2 0 2 2048 1 0 0.125 0 0.0 0.2762052248855373 1.0 4," +
+            "2 2 19 8 768 0 0 0 24 6.75581084657105e-05 0.3360696028313016 0.6561264822134387 13," +
+            "1 2 14 3 117248 118 9 0.2576419213973799 15 2.9501338895336667e-05 0.34758319164440127 0.7867647058823529 13," +
+            "36 14 30 67 15872 12 6 0.1935483870967742 61 0.00029020209644148716 0.35981685495754684 0.26139240506329114 13," +
+            "24 0 5 42 512 0 0 0 29 6.320955414686611e-05 0.3327529052946934 0.1625615763546798 13," +
+            "4 5 71 6 4864 2 0 0.10526315789473684 64 7.921737106464583e-05 0.34975047460979686 0.6351265822784811 2," +
+            "4 3 15 6 75008 87 57 0.29692832764505117 22 8.656692239610756e-06 0.3351872228698428 0.6623376623376623 13," +
+            "0 1 0 2 67072 2 1 0.007633587786259542 0 0.0 0.259329812834788 0 13," +
+            "0 3 0 2 90112 187 202 0.53125 0 0.0 0.3319111063164141 1.0 2"
+        ;
+        items = items.split(",")
+        for(var i=0;i<items.length;i++){
+            var item = items[i]
+            item = item.split(" ")
+            var obj = [];
+            for(var m =0;m<item.length;m++){
+                if(item[m]!=""){
+                    obj.push(item[m])
+                }
+            }
+            obj = obj.join(",");
+            console.log(obj)
+        }
+    }
+</script>
+</body>
+</html>

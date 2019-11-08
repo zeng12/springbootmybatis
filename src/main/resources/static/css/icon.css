@@ -1,0 +1,43 @@
+
+/*自定义图标*/
+
+.icon-jc{
+    background:url('../img/icon/jc.png') no-repeat center center;
+}
+
+.icon-sj{
+    background:url('../img/icon/sj.png') no-repeat center center;
+}
+
+.icon-tj{
+    background:url('../img/icon/tj.png') no-repeat center center;
+}
+
+
+.icon-tb{
+    background:url('../img/icon/tb.png') no-repeat center center;
+}
+
+
+.icon-bg{
+    background:url('../img/icon/bg.png') no-repeat center center;
+}
+
+
+.icon-gg{
+    background:url('../img/icon/gg.png') no-repeat center center;
+}
+
+
+.icon-xm{
+    background:url('../img/icon/xm.png') no-repeat center center;
+}
+
+
+.icon-mt{
+    background:url('../img/icon/mt.png') no-repeat center center;
+}
+
+.icon-tab16{
+    background:url('../img/icon/tab16.png') no-repeat center center;
+}

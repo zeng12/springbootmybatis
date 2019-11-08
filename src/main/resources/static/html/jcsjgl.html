@@ -1,0 +1,94 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>基础数据管理</title>
+    <script type="text/javascript" src="../js/boot.js"></script>
+</head>
+<body>
+<div id="tb" style="padding:2px 5px;">
+    <input class="easyui-searchbox" data-options="prompt:'按照编号查询',searcher:cxFun" style="width:300px"/>
+    <a class="easyui-linkbutton" iconCls="icon-add" onclick="javascript:addFun()">增加</a>
+    <a class="easyui-linkbutton" iconCls="icon-edit" onclick="javascript:updFun()">修改</a>
+    <!--<a class="easyui-linkbutton" iconCls="icon-remove" onclick="javascript:delFun()">删除</a>-->
+</div>
+<table id="datagrid" class="easyui-datagrid"
+       data-options="url:basePath+'/basicData/findAllAs',loadFilter:loadFilter,striped:true,loadMsg:loadMsg,emptyMsg:emptyMsg,
+       fit:true,border:false,pagination:true,toolbar:'#tb',fitColumns:false,singleSelect:true,rownumbers:true,
+       pageList:pageList,pageSize:pageSize
+">
+    <thead>
+    <tr>
+        <th data-options="field:'id',width:150,align:'left',halign:'center',sortable:true">id</th>
+        <th data-options="field:'customer',width:150,align:'left',halign:'center',sortable:true">customer</th>
+        <th data-options="field:'provider',width:150,align:'left',halign:'center',sortable:true">provider</th>
+        <th data-options="field:'peer',width:150,align:'left',halign:'center',sortable:true">peer</th>
+        <th data-options="field:'cone',width:150,align:'left',halign:'center',sortable:true">cone</th>
+        <th data-options="field:'apa',width:150,align:'left',halign:'center',sortable:true">apa</th>
+        <th data-options="field:'dark',width:150,align:'left',halign:'center',sortable:true">dark</th>
+        <th data-options="field:'alexa',width:150,align:'left',halign:'center',sortable:true">alexa</th>
+        <th data-options="field:'darkAndAlexa',width:150,align:'left',halign:'center',sortable:true">darkAndAlexa</th>
+        <th data-options="field:'transit',width:150,align:'left',halign:'center',sortable:true">transit</th>
+        <th data-options="field:'betweeness',width:150,align:'left',halign:'center',sortable:true">betweeness</th>
+        <th data-options="field:'closeness',width:150,align:'left',halign:'center',sortable:true">closeness</th>
+        <th data-options="field:'cluster',width:150,align:'left',halign:'center',sortable:true">cluster</th>
+    </tr>
+    </thead>
+</table>
+
+<script type="text/javascript">
+    top['jcsjgl'] = window;
+
+    function addFun() {
+        openWin({
+            html: 'jcsjgl_edit.html',
+            title: '基础数据管理'
+        })
+    }
+
+    function updFun() {
+        var selected = $('#datagrid').datagrid('getSelected');
+        if (!selected) {
+            showTip('请先选中一条数据');
+            return;
+        }
+        openWin({
+            html: 'advertiser_edit.html?id=' + selected.id,
+            title: '修改'
+        })
+    }
+
+    function delFun() {
+        var selected = $('#datagrid').datagrid('getSelected');
+        if (!selected) {
+            showTip('请先选中一条数据');
+            return;
+        }
+        confirm('确认删除该么？', function () {
+            http({
+                url: basePath + "/advertiser/del?id=" + selected.id,
+                success: function (response) {
+                    if (response.code == 200) {
+                        showTip("删除成功");
+                        fresh();
+                    } else {
+                        showTip("操作失败");
+                    }
+                }
+            })
+        })
+    }
+
+    function cxFun(value) {
+        $('#datagrid').datagrid('load', {gjz: value});
+    }
+
+    function fresh() {
+        $('#datagrid').datagrid('reload');
+    }
+
+
+</script>
+</body>
+</html>

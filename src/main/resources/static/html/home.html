@@ -1,0 +1,367 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>主页</title>
+    <script src="../js/bootstrapboot.js"></script>
+    <script src="../js/echarts.js"></script>
+    <style>
+
+        .background {
+
+            background-color: rgb(243, 243, 244);
+        }
+
+        .foreground {
+            background-color: rgb(255, 255, 255);
+        }
+
+        .title {
+            padding: 10px 10px 5px 10px;
+            font-size: 120%;
+            font-weight: bolder;
+        }
+        .num{
+            padding: 10px 10px 5px 10px;
+            font-size: 150%;
+        }
+
+
+        .border-color-1 {
+            color: #337ab7;
+            border-top: 3px solid #337ab7;
+            border-bottom: 1px solid #337ab7;
+        }
+
+        .border-color-2 {
+            color: #5cb85c;
+            border-top: 3px solid #5cb85c;
+            border-bottom: 1px solid #5cb85c;
+        }
+
+        .border-color-3 {
+            color: #5bc0de;
+            border-top: 3px solid #5bc0de;
+            border-bottom: 1px solid #5bc0de;
+        }
+
+        .border-color-4 {
+            color: #f0ad4e;
+            border-top: 3px solid #f0ad4e;
+            border-bottom: 1px solid #f0ad4e;
+        }
+
+        .border-color-5 {
+            color: #d9534f;
+            border-top: 3px solid #d9534f;
+            border-bottom: 1px solid #d9534f;
+        }
+
+        .border-color-6 {
+            color: #d344ff;
+            border-top: 3px solid #d344ff;
+            border-bottom: 1px solid #d344ff;
+        }
+
+        .container-fluid {
+            height: 100%;
+            padding: 20px;
+            display: flex;
+        }
+
+        .left {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .right {
+            width: 250px;
+            margin-left: 20px;
+            display: flex;
+            flex-direction: column;
+        }
+        .right .right1{
+            flex: 1;
+        }
+        .right .right2{
+            margin-top: 20px;
+            flex: 1;
+        }
+        .right .list-group-item{
+            border: none;
+            border-bottom: 1px solid #ddd;
+            border-radius: 0px;
+        }
+
+        .left .top {
+            flex: 1;
+        }
+
+        .left .bottom {
+            margin-bottom: 20px;
+            height: 130px;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .left .bottom > div:first-child {
+            flex: 1;
+        }
+
+        .left .bottom > div:not(:first-child) {
+            flex: 2;
+        }
+
+        .left .bottom > div:not(:nth-child(3n+1)) {
+            margin-left: 20px;
+        }
+    </style>
+</head>
+<body style="overflow: hidden">
+<div class="container-fluid background">
+    <div class="left ">
+        <div class="bottom">
+            <div class=" animated  bounceInUp foreground">
+                <div class="title border-color-2">昨天营业额</div>
+                <div class="num" id="yesterdayProfit"></div>
+            </div>
+            <div class=" animated  bounceInUp foreground">
+                <div class="title border-color-3">周营业额</div>
+                <div class="num" id="lastWeekProfit"></div>
+            </div>
+            <div class=" animated  bounceInUp foreground">
+                <div class="title border-color-4">月营业额</div>
+                <div class="num" id="lastMonProfit"></div>
+            </div>
+        </div>
+
+        <div class="top animated  bounceInDown foreground">
+            <div class="title border-color-1">今日广告位点击量</div>
+            <div id="main" style="width: 100%;height:100%;"></div>
+        </div>
+    </div>
+    <div class="right">
+        <div class="right1   animated  bounceInRight  foreground">
+            <div class="title  border-color-6">本月金主榜</div>
+            <div>
+                <ul class="list-group" id="thisMonAdvertiseProfitList">
+                </ul>
+
+            </div>
+        </div>
+        <div class="right2   animated  bounceInRight  foreground">
+            <div class="title  border-color-5">上月金主榜</div>
+            <div>
+                <ul class="list-group" id="lastMonAdvertiseProfitList">
+                </ul>
+
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    $(function () {
+        /*// 基于准备好的dom，初始化echarts实例
+        var myChart = echarts.init(document.getElementById('main'));
+
+        var xData = [],
+            yData = [];
+        var min = 50;
+        var max = 0;
+        var dataList;
+        http({
+            url: basePath + "/statis/statis",
+            success: function (response) {
+                console.log(response.data);
+                var lastMonAdvertiseProfitList = response.data.lastMonAdvertiseProfitList;
+                var thisMonAdvertiseProfitList = response.data.thisMonAdvertiseProfitList;
+                var lastMonProfit = response.data.lastMonProfit;
+                var lastWeekProfit = response.data.lastWeekProfit;
+                var yesterdayProfit = response.data.yesterdayProfit;
+                var thisMonProfit = response.data.thisMonProfit;
+                var thisWeekProfit = response.data.thisWeekProfit;
+                if(yesterdayProfit==null||yesterdayProfit==""){
+                    yesterdayProfit = "0.00";
+                }
+                if(lastWeekProfit==null||lastWeekProfit==""){
+                    lastWeekProfit = "0.00";
+                }
+                if(thisWeekProfit==null||thisWeekProfit==""){
+                    thisWeekProfit = "0.00";
+                }
+                if(lastMonProfit==null||lastMonProfit==""){
+                    lastMonProfit = "0.00";
+                }
+                if(thisMonProfit==null||thisMonProfit==""){
+                    thisMonProfit = "0.00";
+                }
+                $("#lastMonProfit").html(thisMonProfit+"/"+lastMonProfit);
+                $("#lastWeekProfit").html(thisWeekProfit+"/"+lastWeekProfit);
+                $("#yesterdayProfit").html(yesterdayProfit);
+
+                var html='';
+                if(lastMonAdvertiseProfitList!=null&&lastMonAdvertiseProfitList.length>0){
+                    for(var i=0;i<lastMonAdvertiseProfitList.length;i++){
+                        var data = lastMonAdvertiseProfitList[i];
+                        html += '<li class="list-group-item">'+data.name+'<span class="badge">'+data.profit+'</span></li>';
+                    }
+                    $("#lastMonAdvertiseProfitList").html(html);
+                }
+                html='';
+                if(thisMonAdvertiseProfitList!=null&&thisMonAdvertiseProfitList.length>0){
+                    for(var i=0;i<thisMonAdvertiseProfitList.length;i++){
+                        var data = thisMonAdvertiseProfitList[i];
+                        html += '<li class="list-group-item">'+data.name+'<span class="badge">'+data.profit+'</span></li>';
+                    }
+                    $("#thisMonAdvertiseProfitList").html(html);
+                }
+
+                var list = response.data.clickList;
+                if (list && list.length > 0) {
+                    var dataShadow = [];
+                    dataList = list;
+                    list.map(function (a, b) {
+                        if (max < Math.max(a.click, 0)) {
+                            max = a.click;
+                        }
+                        xData.push(a.name);
+                        if (a.click === 0) {
+                            yData.push(a.click);
+                        } else {
+                            yData.push(a.click);
+                        }
+                    });
+                    for (var i = 0; i < list.length; i++) {
+                        dataShadow.push(max);
+                    }
+                    option = {
+
+                        xAxis: {
+                            data: xData,
+                            silent: false,
+                            axisLine: {onZero: true},
+                            splitLine: {show: false},
+                            splitArea: {show: false}
+                        },
+                        yAxis: {
+                            axisLine: {
+                                show: true
+                            },
+                            axisTick: {
+                                show: true
+                            },
+                            axisLabel: {
+                                textStyle: {
+                                    color: '#999'
+                                }
+                            }
+                        },
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'line',
+                                lineStyle: {
+                                    backgroundColor: '#283b56'
+                                }
+                            },
+                            formatter: function (params) {
+                                var data = dataList[params[1].dataIndex];
+                                return "广告主名称：" + data.a_name +
+                                    "<br/>广告主项目：" + data.a_item_name +
+                                    "<br/>媒体主名称：" + data.m_name +
+                                    "<br/>媒体主项目：" + data.m_item_name +
+                                    "<br/>广告位名称：" + data.name +
+                                    "<br/>今日点击量：" + params[1].data;
+                            }
+                        },
+//                        visualMap: {
+//                            type: 'continuous',
+//                            dimension: 1,
+//                            text: ['多', '少'],
+//                            inverse: false,
+//                            itemHeight: $("#main").height()-250,
+//                            calculable: true,//显示比例尺上下限
+//                            min: 0,
+//                            max: max*1.1+1,
+//                            top: 0,
+//                            left: 20,
+//                            inRange: {
+//                                colorLightness: [0.4, 0.8]
+//                            },
+//                            outOfRange: {
+//                                color: '#bbb'
+//                            }
+//                        },
+                        dataZoom: [
+                            {
+                                type: 'inside'
+                            }
+                        ],
+                        series: [
+                            { // For shadow
+                                type: 'bar',
+                                itemStyle: {
+                                    normal: {color: 'rgba(0,0,0,0.05)'}
+                                },
+                                barGap: '-100%',
+                                barCategoryGap: '40%',
+                                data: dataShadow,
+                                animation: false
+                            },
+                            {
+                                type: 'bar',
+                                label: {
+                                    show: true,
+                                    normal: {
+                                        show: true,
+                                        position: 'top'
+                                    }
+                                },
+                                itemStyle: {
+                                    normal: {
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1,
+                                            [
+                                                {offset: 0, color: '#83bff6'},
+                                                {offset: 0.5, color: '#188df0'},
+                                                {offset: 1, color: '#188df0'}
+                                            ]
+                                        )
+                                    },
+                                    emphasis: {
+                                        color: new echarts.graphic.LinearGradient(
+                                            0, 0, 0, 1,
+                                            [
+                                                {offset: 0, color: '#2378f7'},
+                                                {offset: 0.7, color: '#2378f7'},
+                                                {offset: 1, color: '#83bff6'}
+                                            ]
+                                        )
+                                    }
+                                },
+                                data: yData
+                            }
+                        ]
+                    };
+
+                    myChart.setOption(option);
+                }
+            }
+        })
+
+
+// Enable data zoom when user click bar.
+        var zoomSize = 6;
+        myChart.on('click', function (params) {
+            myChart.dispatchAction({
+                type: 'dataZoom',
+                startValue: xData[Math.max(params.dataIndex - zoomSize / 2, 0)],
+                endValue: xData[Math.min(params.dataIndex + zoomSize / 2, xData.length - 1)]
+            });
+        });*/
+    })
+</script>
+</body>
+</html>

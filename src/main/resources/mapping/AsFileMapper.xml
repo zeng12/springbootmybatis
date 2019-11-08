@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xiejt.springbootmybatis.proManagement.mapper.AsFileMapper">
+
+    <resultMap id="AsFile" type="AsFile">
+        <result column="id" property="id" />
+        <result column="asid" property="asid" />
+        <result column="filename" property="filename" />
+        <result column="filenameold" property="filenameold" />
+        <result column="filetype" property="filetype" />
+        <result column="filepath" property="filepath" />
+        <result column="date" property="date" />
+    </resultMap>
+
+    <!--根据用户账号获得账号信息-->
+    <select id="findById" resultType="AsFile">
+        select * from asfile where id = #{id}
+    </select>
+
+    <!--获得所有用户信息-->
+    <select id="findAllAsFile" resultType="AsFile">
+        select * from asfile
+    </select>
+    <!--获得所有用户信息-->
+    <select id="findAsFileByAsId" resultType="AsFile">
+        select * from asfile where asid = #{id}
+    </select>
+</mapper>

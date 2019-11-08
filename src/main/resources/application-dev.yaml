@@ -1,0 +1,22 @@
+server:
+  #配置项目的端口号
+  port: 8080
+  #配置项目的访问路径
+  servlet:
+    context-path: /asRank
+
+spring:
+  datasource:
+    #数据源连接路径
+    url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
+    username: root
+    password: 123
+mybatis:
+  mapper-locations: classpath:mapping/*.xml
+  type-aliases-package: com.xiejt.springbootmybatis.proManagement.entity
+  configuration:
+          log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+
+#配置文件的注入属性,配置文件中自由设置参数,可通过@Value("${timeout.oout}")获取参数
+timeout:
+  oout: 1110

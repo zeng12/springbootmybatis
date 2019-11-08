@@ -1,0 +1,67 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>增加广告主项目</title>
+    <script type="text/javascript" src="../js/boot.js"></script>
+</head>
+<body>
+<div class="easyui-panel" data-options="border:false" style="padding: 10px;width: 500px">
+    <form id="ff" method="post">
+        <input type="hidden" name="id">
+        <div style="margin-bottom:20px">
+            <input class="easyui-combobox" id="a_id" name="a_id" style="width:100%"
+                   data-options="valueField:'id',textField:'name',label:'广告主:',required:true,panelHeight:100">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="name" style="width:100%"
+                   data-options="label:'项目名称:',required:true">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-numberbox" name="price" style="width:100%"
+                   data-options="label:'单价:',required:true,precision:2,groupSeparator:',',value:5">
+        </div>
+        <div style="margin-bottom:20px">
+            <input class="easyui-textbox" name="url" style="width:100%"
+                   data-options="label:'项目链接:',required:true,value:'http://'">
+        </div>
+        <div style="margin-bottom:20px">
+
+        </div>
+    </form>
+    <div style="text-align:center;padding:5px 0">
+        <a href="javascript:void(0)" data-options="iconCls:'icon-save'" class="easyui-linkbutton" onclick="submitForm()"
+           style="width:80px">保存</a>
+    </div>
+</div>
+<script type="text/javascript">
+    http({
+        url: basePath + "/advertiser/list",
+        success: function (response) {
+            $('#a_id').combobox('loadData', response.data.rows);
+        }
+    })
+
+    top['advertiser_item_edit'] = window;
+    var url = basePath + "/advertiserItem/add";
+
+
+    function submitForm() {
+        $('#ff').form('submit', {
+            url: url,
+            success: function (data) {
+                data = JSON.parse(data);
+                if (data.code == 200) {
+                    showTip("操作成功");
+                    top['advertiser_item'].fresh();
+                    top['advertiser_item'].closeWin();
+                } else {
+                    showAlert("操作失败")
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

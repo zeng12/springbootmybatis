@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>广告主信息编辑</title>
+    <script type="text/javascript" src="../js/boot.js"></script>
+</head>
+<body>
+<div class="easyui-panel" data-options="border:false" style="padding: 10px;width: 500px">
+    <form id="ff" method="post">
+        <input type="hidden" name="id">
+        <div style="margin-bottom:20px"><input class="easyui-textbox" name="id" style="width:100%" data-options="label:'id:',required:true"></div>
+        <div style="margin-bottom:20px"><input class="easyui-numberbox" name="customer" style="width:100%" data-options="label:'customer:',required:false"></div>
+        <div style="margin-bottom:20px"><input class="easyui-numberbox" name="provider" style="width:100%" data-options="label:'provider:',required:false"></div>
+        <div style="margin-bottom:20px"><input class="easyui-numberbox" name="peer" style="width:100%" data-options="label:'peer:',required:false"></div>
+        <div style="margin-bottom:20px"><input class="easyui-numberbox" name="cone" style="width:100%" data-options="label:'cone:',required:false"></div>
+        <div style="margin-bottom:20px"><input class="easyui-numberbox" name="apa" style="width:100%" data-options="label:'apa:',required:false"></div>
+        <div style="margin-bottom:20px"><input class="easyui-numberbox" name="dark" style="width:100%" data-options="label:'dark:',required:false"></div>
+        <div style="margin-bottom:20px"><input class="easyui-numberbox" name="alexa" style="width:100%" data-options="label:'alexa:',required:false"></div>
+        <div style="margin-bottom:20px"><input class="easyui-numberbox" name="darkAndAlexa" style="width:100%" data-options="label:'darkAndAlexa:',required:false"></div>
+        <div style="margin-bottom:20px"><input class="easyui-numberbox" name="transit" style="width:100%" data-options="label:'transit:',required:false"></div>
+        <div style="margin-bottom:20px"><input class="easyui-numberbox" name="betweeness" style="width:100%" data-options="label:'betweeness:',required:false"></div>
+        <div style="margin-bottom:20px"><input class="easyui-numberbox" name="closeness" style="width:100%" data-options="label:'closeness:',required:false"></div>
+        <div style="margin-bottom:20px"><input class="easyui-numberbox" name="cluster" style="width:100%" data-options="label:'cluster:',required:false"></div>
+    </form>
+    <div style="text-align:center;padding:5px 0">
+        <a href="javascript:void(0)"  data-options="iconCls:'icon-save'" class="easyui-linkbutton" onclick="submitForm()" style="width:80px">保存</a>
+    </div>
+</div>
+<script type="text/javascript">
+    top['advertiser_edit']=window;
+    var id=getUrlParams('id');
+    var url;
+    if(id==null || id==""){
+        url=basePath+"/advertiser/add";
+    }else{
+        url=basePath+"/advertiser/upd?id="+id;
+
+        http({
+            url:basePath+"/advertiser/get?id="+id,
+            success:function (response) {
+                $('#ff').form('load',response.data);
+            }
+        })
+    }
+    function submitForm(){
+        $('#ff').form('submit',{
+            url:url,
+            success:function(data){
+                data=JSON.parse(data);
+                if(data.code==200){
+                    showTip("操作成功")
+                    top['advertiser'].fresh();
+                    top['advertiser'].closeWin();
+                }else{
+                    showAlert("操作失败")
+                }
+            }
+        });
+    }
+</script>
+</body>
+</html>

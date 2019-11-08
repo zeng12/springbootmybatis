@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+        "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>AS分类</title>
+    <script type="text/javascript" src="../js/boot.js"></script>
+</head>
+<body>
+<div id="tb" style="padding:2px 5px;">
+    <input id="customer" class="easyui-searchbox" data-options="prompt:'按照编号查询',searcher:cxFun" style="width:300px"/>
+    <a class="easyui-linkbutton" iconCls="icon-add" onclick="javascript:ycflFun()">预测分类</a>
+</div>
+<table id="datagrid" class="easyui-datagrid"
+       data-options="url:basePath+'/basicData/findAllAs',loadFilter:loadFilter,striped:true,loadMsg:loadMsg,emptyMsg:emptyMsg,
+       fit:true,border:false,pagination:true,toolbar:'#tb',fitColumns:false,singleSelect:true,rownumbers:true,
+       pageList:pageList,pageSize:pageSize
+">
+    <thead>
+    <tr>
+        <th data-options="field:'customer',width:150,align:'left',halign:'center',sortable:true">customer</th>
+        <th data-options="field:'provider',width:150,align:'left',halign:'center',sortable:true">provider</th>
+        <th data-options="field:'peer',width:150,align:'left',halign:'center',sortable:true">peer</th>
+        <th data-options="field:'cone',width:150,align:'left',halign:'center',sortable:true">cone</th>
+        <th data-options="field:'apa',width:150,align:'left',halign:'center',sortable:true">apa</th>
+        <th data-options="field:'dark',width:150,align:'left',halign:'center',sortable:true">dark</th>
+        <th data-options="field:'alexa',width:150,align:'left',halign:'center',sortable:true">alexa</th>
+        <th data-options="field:'darkAndAlexa',width:150,align:'left',halign:'center',sortable:true">darkAndAlexa</th>
+        <th data-options="field:'transit',width:150,align:'left',halign:'center',sortable:true">transit</th>
+        <th data-options="field:'betweeness',width:150,align:'left',halign:'center',sortable:true">betweeness</th>
+        <th data-options="field:'closeness',width:150,align:'left',halign:'center',sortable:true">closeness</th>
+        <th data-options="field:'cluster',width:150,align:'left',halign:'center',sortable:true">cluster</th>
+    </tr>
+    </thead>
+</table>
+
+<script type="text/javascript">
+    top['asfl'] = window;
+
+    var lxData = ["Enterprise Customer","Content Provider","Transit/Access"];
+
+    function cxFun() {
+        var customer = $('#customer').textbox('getValue');
+        $('#datagrid').datagrid('load', {customer: customer});
+    }
+    
+    function ycflFun() {
+        var crows = $('#datagrid').datagrid('getSelections');
+        if(crows==null||crows.length==0){
+            $.messager.alert('提示','请先选择一条记录后再进行预测!');
+        }else{
+            http({
+                url:basePath+'/basicData/findAsFl',
+                data:crows[0],
+                success:function (response) {
+                    var lxbh = response.data;
+                    $.messager.alert('预测结果','该AS为'+lxData[lxbh]+'类型！','info');
+                }
+            })
+        }
+    }
+</script>
+</body>
+</html>

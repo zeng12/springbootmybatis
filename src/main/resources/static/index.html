@@ -1,0 +1,118 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="UTF-8">
+    <title>ASRank</title>
+    <script type="text/javascript" src="js/boot.js"></script>
+</head>
+<body class="easyui-layout">
+<div data-options="region:'north',border:false" style="padding:10px">
+    <div style="position: relative">
+        <span style="font-size: 30px;font-weight: bolder;">ASRank</span>
+        <span style="position: absolute;bottom: 0px;right: 0px;display: none" id="user">欢迎：<span id="name"></span> <a id="btn" onclick="logout()" href="javascript:void(0)">注销</a></span>
+    </div>
+</div>
+<div data-options="region:'west',split:true,title:'功能区',collapsible:false" style="width:200px;">
+    <ul class="easyui-tree" data-options="data:menus,animate:true,onClick:menuClick">
+    </ul>
+</div>
+<div data-options="region:'center'">
+    <div id="tabs" class="easyui-tabs" data-options="fit:true,border:false"></div>
+</div>
+</body>
+<script>
+    top['index']=window;
+    var menus = [{
+        text: '基础数据',
+        iconCls:'icon-jc',
+        children: [{
+            text: '关系数据处理',
+            iconCls:'icon-gg',
+            url: 'html/jcsjgl.html'
+        },{
+            text: '分类数据处理',
+            iconCls:'icon-jc',
+            url: 'html/jcsjcl.html'
+        }]
+    }, {
+        text: '数据预测',
+        iconCls:'icon-sj',
+        state: 'open',
+        children: [{
+            text: '商业关系预测',
+            iconCls:'icon-sj',
+            url: 'html/gxyc.html'
+        },{
+            text: '商业类型分类',
+            iconCls:'icon-sj',
+            url: 'html/asfl.html'
+        }]
+    }];
+
+    //点击菜单
+    function menuClick(node) {
+        if (node.url) {
+            var tab = $('#tabs').tabs('getTab', node.text);//根据tab的文字判断是否已经打开过了，如果打开过了刷新，否则增加
+            if (tab) {
+                $('#tabs').tabs('select', node.text)
+            } else {
+                $('#tabs').tabs('add', {
+                    title: node.text,
+                    content:getContent(node.url),
+                    data:1,
+                    closable: true,
+                    tools:[{
+                        iconCls:'icon-mini-refresh',
+                        handler:function(){
+                            var tab = $('#tabs').tabs('getTab', node.text);
+                            $('#tabs').tabs('update', {
+                                tab: tab,
+                                options: {
+                                    content:getContent(node.url),
+                                }
+                            });
+                        }
+                    }]
+                });
+            }
+        }
+    }
+    function logout(){
+        localStorage.removeItem("uuid");
+        location.href="login.html";
+    }
+
+
+    $(function () {
+        http({
+            url:basePath+'/user/getloginUser',
+            async:false,
+            success:function (response) {
+                if(response.data){
+                    $("#name").text(response.data.name);
+                    $("#user").show();
+                }
+            }
+        })
+//        $('#tabs').tabs('add', {
+//            title: '首页',
+//            content:getContent("html/home.html"),
+//            data:1,
+//            closable: false,
+//            tools:[{
+//                iconCls:'icon-mini-refresh',
+//                handler:function(){
+//                    var tab = $('#tabs').tabs('getTab', '首页');
+//                    $('#tabs').tabs('update', {
+//                        tab: tab,
+//                        options: {
+//                            content:getContent("html/home.html"),
+//                        }
+//                    });
+//                }
+//            }]
+//        });
+        // menuClick(menus[0].children[0])
+    })
+</script>
+</html>
