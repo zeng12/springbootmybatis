@@ -1,12 +1,12 @@
-package com.xiejt.springbootmybatis.proManagement.service;
+package com.zql.springbootmybatis.proManagement.service;
 
 /*
  * @功能描述
- * @Author xiejt
+ * @Author zql
  **/
 
-import com.xiejt.springbootmybatis.proManagement.entity.AsRank;
-import com.xiejt.springbootmybatis.proManagement.mapper.AsRankMapper;
+import com.zql.springbootmybatis.proManagement.entity.AsRank;
+import com.zql.springbootmybatis.proManagement.mapper.AsRankMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

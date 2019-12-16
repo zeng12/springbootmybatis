@@ -1,15 +1,15 @@
-package com.xiejt.springbootmybatis.proManagement.controller;
+package com.zql.springbootmybatis.proManagement.controller;
 
-import com.xiejt.springbootmybatis.proManagement.entity.AsFile;
-import com.xiejt.springbootmybatis.proManagement.entity.AsRank;
-import com.xiejt.springbootmybatis.proManagement.service.AsFileService;
+import com.zql.springbootmybatis.proManagement.entity.AsFile;
+import com.zql.springbootmybatis.proManagement.entity.AsRank;
+import com.zql.springbootmybatis.proManagement.service.AsFileService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
  * @Description: java类作用描述
- * @Author: xjt
+ * @Author: zql
  * @CreateDate: 2019/11/3$ 15:24$
  */
 @RestController

@@ -1,4 +1,4 @@
-package com.xiejt.springbootmybatis.proManagement.entity;
+package com.zql.springbootmybatis.proManagement.entity;
 
 
 public class User {

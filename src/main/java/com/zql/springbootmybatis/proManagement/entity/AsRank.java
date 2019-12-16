@@ -1,4 +1,4 @@
-package com.xiejt.springbootmybatis.proManagement.entity;
+package com.zql.springbootmybatis.proManagement.entity;
 
 /**
  * As实体
@@ -17,6 +17,7 @@ public class AsRank {
     private long betweeness;
     private long closeness;
     private long cluster;
+    private long type;
 
     public Integer getId() {
         return id;
@@ -120,6 +121,14 @@ public class AsRank {
 
     public void setCluster(long cluster) {
         this.cluster = cluster;
+    }
+
+    public long getType() {
+        return type;
+    }
+
+    public void setType(long type) {
+        this.type = type;
     }
 
     @Override

@@ -1,4 +1,4 @@
-package com.xiejt.springbootmybatis.proManagement.controller;
+package com.zql.springbootmybatis.proManagement.controller;
 
 
 public class ResponseObject {

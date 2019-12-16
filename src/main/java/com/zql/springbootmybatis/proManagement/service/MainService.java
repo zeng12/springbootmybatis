@@ -1,9 +1,8 @@
-package com.xiejt.springbootmybatis.proManagement.service;
+package com.zql.springbootmybatis.proManagement.service;
 
-import com.xiejt.springbootmybatis.proManagement.entity.AsRank;
-import com.xiejt.springbootmybatis.proManagement.entity.User;
-import com.xiejt.springbootmybatis.proManagement.mapper.AsRankMapper;
-import com.xiejt.springbootmybatis.proManagement.mapper.UserMapper;
+import com.zql.springbootmybatis.proManagement.entity.User;
+import com.zql.springbootmybatis.proManagement.mapper.AsRankMapper;
+import com.zql.springbootmybatis.proManagement.mapper.UserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;

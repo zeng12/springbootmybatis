@@ -1,4 +1,4 @@
-package com.xiejt.springbootmybatis.common.baseDao;
+package com.zql.springbootmybatis.common.baseDao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;

@@ -1,10 +1,7 @@
-package com.xiejt.springbootmybatis.proManagement.controller;
+package com.zql.springbootmybatis.proManagement.controller;
 
-import com.xiejt.springbootmybatis.common.aop.NoLogin;
-import com.xiejt.springbootmybatis.common.baseDao.BaseDao;
-import com.xiejt.springbootmybatis.proManagement.entity.AsRank;
-import com.xiejt.springbootmybatis.proManagement.entity.User;
-import com.xiejt.springbootmybatis.proManagement.service.MainService;
+import com.zql.springbootmybatis.proManagement.entity.User;
+import com.zql.springbootmybatis.proManagement.service.MainService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;

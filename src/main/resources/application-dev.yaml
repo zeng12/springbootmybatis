@@ -10,10 +10,10 @@ spring:
     #数据源连接路径
     url: jdbc:mysql://127.0.0.1:3306/test?useUnicode=true&characterEncoding=UTF-8&serverTimezone=UTC
     username: root
-    password: 123
+    password: root
 mybatis:
   mapper-locations: classpath:mapping/*.xml
-  type-aliases-package: com.xiejt.springbootmybatis.proManagement.entity
+  type-aliases-package: com.zql.springbootmybatis.proManagement.entity
   configuration:
           log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
 

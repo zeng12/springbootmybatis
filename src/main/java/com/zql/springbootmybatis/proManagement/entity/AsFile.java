@@ -1,10 +1,10 @@
-package com.xiejt.springbootmybatis.proManagement.entity;
+package com.zql.springbootmybatis.proManagement.entity;
 
 import java.util.Date;
 
 /**
  * @Description: java类作用描述
- * @Author: xjt
+ * @Author: zql
  * @CreateDate: 2019/11/3$ 15:28$
  */
 public class AsFile {

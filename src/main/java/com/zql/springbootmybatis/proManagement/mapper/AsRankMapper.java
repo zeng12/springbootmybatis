@@ -1,10 +1,9 @@
-package com.xiejt.springbootmybatis.proManagement.mapper;
+package com.zql.springbootmybatis.proManagement.mapper;
 
-import com.xiejt.springbootmybatis.proManagement.entity.AsRank;
+import com.zql.springbootmybatis.proManagement.entity.AsRank;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * AsMapper
